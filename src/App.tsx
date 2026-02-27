@@ -7,6 +7,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
+import GlobalPlatformPage from "./pages/GlobalPlatformPage";
+import CertificationsPage from "./pages/CertificationsPage";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar";
 import AIChatWidget from "@/components/AIChatWidget";
@@ -28,18 +30,16 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-
       {/* Sidebar */}
       <Sidebar collapsed={collapsed} />
 
-      {/* Main Content Area */}
+      {/* Main Content */}
       <div
         className={`flex-1 transition-all duration-300 ${
           collapsed ? "ml-20" : "ml-64"
         }`}
       >
         <Navbar onToggleSidebar={() => setCollapsed(!collapsed)} />
-
         <div className="p-6">{children}</div>
       </div>
     </div>
@@ -60,13 +60,13 @@ const App = () => {
             <HashRouter>
               <Routes>
 
-                {/* Landing Page (No Layout) */}
+                {/* Landing */}
                 <Route path="/" element={<Landing1 />} />
 
-                {/* Auth Page (No Layout) */}
+                {/* Auth */}
                 <Route path="/auth" element={<AuthPage />} />
 
-                {/* App Pages (With Sidebar + Navbar) */}
+                {/* Dashboard */}
                 <Route
                   path="/dashboard"
                   element={
@@ -76,6 +76,7 @@ const App = () => {
                   }
                 />
 
+                {/* Test */}
                 <Route
                   path="/test"
                   element={
@@ -85,6 +86,7 @@ const App = () => {
                   }
                 />
 
+                {/* Results */}
                 <Route
                   path="/results/:id"
                   element={
@@ -94,6 +96,7 @@ const App = () => {
                   }
                 />
 
+                {/* History */}
                 <Route
                   path="/history"
                   element={
@@ -103,11 +106,42 @@ const App = () => {
                   }
                 />
 
+                {/* Overall Report → SAME AS HISTORY */}
+                <Route
+                  path="/report"
+                  element={
+                    <AppLayout>
+                      <HistoryPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Leaderboard */}
                 <Route
                   path="/leaderboard"
                   element={
                     <AppLayout>
                       <LeaderboardPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Global Platforms */}
+                <Route
+                  path="/global-platforms"
+                  element={
+                    <AppLayout>
+                      <GlobalPlatformPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Certifications */}
+                <Route
+                  path="/certifications"
+                  element={
+                    <AppLayout>
+                      <CertificationsPage />
                     </AppLayout>
                   }
                 />

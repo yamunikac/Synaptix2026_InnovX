@@ -4,7 +4,6 @@ import {
   ClipboardList,
   Globe,
   Award,
-  Code,
   BarChart3,
   History,
   Trophy,
@@ -22,13 +21,16 @@ export default function Sidebar({ collapsed }: SidebarProps) {
   const menu = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
     { name: "Assessments", icon: ClipboardList, path: "/assessments" },
-    { name: "Global Platforms", icon: Globe, path: "/platforms" },
+    { name: "Global Platforms", icon: Globe, path: "/global-platforms" },
     { name: "Certifications", icon: Award, path: "/certifications" },
-    { name: "IDE", icon: Code, path: "/ide" },
     { name: "Overall Report", icon: BarChart3, path: "/report" },
     { name: "History", icon: History, path: "/history" },
     { name: "Leaderboard", icon: Trophy, path: "/leaderboard" },
   ];
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <div
@@ -51,7 +53,7 @@ export default function Sidebar({ collapsed }: SidebarProps) {
       {/* Menu */}
       <div className="flex-1 overflow-y-auto py-4 space-y-1">
         {menu.map((item) => {
-          const active = location.pathname === item.path;
+          const active = isActive(item.path);
 
           return (
             <button
