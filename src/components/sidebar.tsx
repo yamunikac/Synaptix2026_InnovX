@@ -21,8 +21,8 @@ export default function Sidebar({ collapsed }: SidebarProps) {
   const menu = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
 
-    // ✅ Assessments now directly opens TestPage
-    { name: "Assessments", icon: ClipboardList, path: "/test" },
+    // ✅ Assessments now correctly routes to subject selection page
+    { name: "Assessments", icon: ClipboardList, path: "/assessments" },
 
     { name: "Global Platforms", icon: Globe, path: "/global-platforms" },
     { name: "Certifications", icon: Award, path: "/certifications" },

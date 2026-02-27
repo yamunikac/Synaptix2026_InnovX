@@ -7,8 +7,6 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 
-import GlobalPlatformPage from "./pages/GlobalPlatformPage";
-import CertificationsPage from "./pages/CertificationsPage";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/sidebar";
 
@@ -19,6 +17,14 @@ import TestPage from "./pages/TestPage";
 import ResultsPage from "./pages/ResultsPage";
 import HistoryPage from "./pages/HistoryPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+
+import AssessmentsPage from "./pages/AssessmentsPage";
+import GlobalPlatformPage from "./pages/GlobalPlatformPage";
+import CertificationsPage from "./pages/CertificationsPage";
+
+import AptitudeTestPage from "./pages/AptitudeTestPage";
+import TechnicalTestPage from "./pages/TechnicalTestPage";
+import VerbalTestPage from "./pages/VerbalTestPage";
 
 const queryClient = new QueryClient();
 
@@ -57,9 +63,11 @@ const App = () => {
             <HashRouter>
               <Routes>
 
+                {/* Landing */}
                 <Route path="/" element={<Landing1 />} />
                 <Route path="/auth" element={<AuthPage />} />
 
+                {/* Dashboard */}
                 <Route
                   path="/dashboard"
                   element={
@@ -69,6 +77,47 @@ const App = () => {
                   }
                 />
 
+                {/* Assessments */}
+                <Route
+                  path="/assessments"
+                  element={
+                    <AppLayout>
+                      <AssessmentsPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Aptitude */}
+                <Route
+                  path="/aptitude-test"
+                  element={
+                    <AppLayout>
+                      <AptitudeTestPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Technical */}
+                <Route
+                  path="/technical-test"
+                  element={
+                    <AppLayout>
+                      <TechnicalTestPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Verbal */}
+                <Route
+                  path="/verbal-test"
+                  element={
+                    <AppLayout>
+                      <VerbalTestPage />
+                    </AppLayout>
+                  }
+                />
+
+                {/* Generic Test */}
                 <Route
                   path="/test"
                   element={
@@ -78,6 +127,7 @@ const App = () => {
                   }
                 />
 
+                {/* Results */}
                 <Route
                   path="/results/:id"
                   element={
@@ -87,6 +137,7 @@ const App = () => {
                   }
                 />
 
+                {/* History */}
                 <Route
                   path="/history"
                   element={
@@ -96,6 +147,7 @@ const App = () => {
                   }
                 />
 
+                {/* Overall Report (same as History) */}
                 <Route
                   path="/report"
                   element={
@@ -105,6 +157,7 @@ const App = () => {
                   }
                 />
 
+                {/* Leaderboard */}
                 <Route
                   path="/leaderboard"
                   element={
@@ -114,6 +167,7 @@ const App = () => {
                   }
                 />
 
+                {/* Global Platforms */}
                 <Route
                   path="/global-platforms"
                   element={
@@ -123,6 +177,7 @@ const App = () => {
                   }
                 />
 
+                {/* Certifications */}
                 <Route
                   path="/certifications"
                   element={
@@ -132,6 +187,7 @@ const App = () => {
                   }
                 />
 
+                {/* Fallback */}
                 <Route path="*" element={<Landing1 />} />
 
               </Routes>
