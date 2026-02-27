@@ -20,7 +20,10 @@ export default function Sidebar({ collapsed }: SidebarProps) {
 
   const menu = [
     { name: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { name: "Assessments", icon: ClipboardList, path: "/assessments" },
+
+    // ✅ Assessments now directly opens TestPage
+    { name: "Assessments", icon: ClipboardList, path: "/test" },
+
     { name: "Global Platforms", icon: Globe, path: "/global-platforms" },
     { name: "Certifications", icon: Award, path: "/certifications" },
     { name: "Overall Report", icon: BarChart3, path: "/report" },
