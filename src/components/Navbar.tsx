@@ -21,18 +21,27 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  /* ================= FETCH PROFILE ================= */
+  /* ================= FETCH PROFILE (SAFE) ================= */
   useEffect(() => {
-    if (user) {
-      supabase
-        .from("profiles")
-        .select("name, email")
-        .eq("id", user.id)
-        .single()
-        .then(({ data }) => {
-          if (data) setProfile(data as Profile);
-        });
-    }
+    if (!user) return;
+
+    const fetchProfile = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("name, email")
+          .eq("id", user.id)
+          .single();
+
+        if (!error && data) {
+          setProfile(data as Profile);
+        }
+      } catch (err) {
+        console.error("Profile fetch error:", err);
+      }
+    };
+
+    fetchProfile();
   }, [user]);
 
   /* ================= CLOSE DROPDOWN ================= */
@@ -54,7 +63,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
   return (
     <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-gray-300 bg-white px-6">
 
-      {/* ================= LEFT — SIDEBAR TOGGLE ================= */}
+      {/* LEFT — Sidebar Toggle */}
       <button
         onClick={onToggleSidebar}
         className="p-2 rounded-md hover:bg-gray-100 transition"
@@ -62,19 +71,17 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
         <Menu className="w-5 h-5 text-gray-700" />
       </button>
 
-      {/* ================= RIGHT — PROFILE ================= */}
+      {/* RIGHT — Profile */}
       {user && (
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex items-center gap-2 rounded-md border border-gray-300 px-3 py-1.5 hover:bg-gray-50 transition"
           >
-            {/* Avatar */}
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white text-sm font-bold">
-              {(profile?.name?.[0] || "U").toUpperCase()}
+              {(profile?.name?.[0] || user.email?.[0] || "U").toUpperCase()}
             </div>
 
-            {/* Username */}
             <span className="text-sm font-medium text-gray-800">
               {profile?.name || "User"}
             </span>
@@ -86,23 +93,20 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
             />
           </button>
 
-          {/* ================= DROPDOWN ================= */}
           {profileOpen && (
-            <div className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-gray-300 bg-white shadow-xl p-4 space-y-4 animate-fade-in z-50">
+            <div className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-gray-300 bg-white shadow-xl p-4 space-y-4 z-50">
 
-              {/* Profile Info */}
               <div>
                 <p className="font-semibold text-sm text-gray-800">
-                  {profile?.name}
+                  {profile?.name || "User"}
                 </p>
                 <p className="text-xs text-gray-500 truncate">
-                  {profile?.email}
+                  {profile?.email || user.email}
                 </p>
               </div>
 
               <div className="border-t border-gray-200" />
 
-              {/* View History */}
               <button
                 onClick={() => {
                   setProfileOpen(false);
@@ -114,7 +118,6 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
                 View History
               </button>
 
-              {/* Sign Out */}
               <button
                 onClick={() => {
                   setProfileOpen(false);
