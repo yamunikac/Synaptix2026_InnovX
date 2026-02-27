@@ -7,7 +7,7 @@ export default function Landing1() {
   return (
     <div className="flex flex-col min-h-screen overflow-x-hidden">
 
-      {/* LOADING */}
+      {/* LOADING OVERLAY */}
       {loading && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
           <div className="h-12 w-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -59,7 +59,11 @@ export default function Landing1() {
           </h1>
 
           <Link
-            to="/auth"
+            to="/dashboard"
+            onClick={() => {
+              setLoading(true);
+              setTimeout(() => setLoading(false), 500);
+            }}
             className="bg-orange-500 px-8 py-4 rounded-full text-white text-lg font-semibold hover:bg-orange-600 hover:scale-105 transition duration-300 shadow-lg"
           >
             Get Started
